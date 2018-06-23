@@ -1,0 +1,28 @@
+<launch>
+  <!-- image publish tool -->
+
+  <!-- choose to publish images from camera or video -->
+    <arg name="pub_video"     default="true" />
+    <arg name="video_location"     default="/home/ubuntu/Desktop/catkin_ws/src/image_pub/src/2.mkv" />
+
+    <arg name="fps"     default="10" />     <!-- fps for publish rate -->
+
+  <!-- image size you want to publish -->
+    <arg name="image_width"     default="640" />
+    <arg name="image_height"     default="360" />
+
+    <arg name="show_image"     default="true" />     <!--choose whether to show image -->
+
+    <node name="image_pub_node" pkg="image_pub" type="image_pub_node" output="screen" ns="image_pub">
+        <remap from="image"         to="image"/>
+
+        <param name="video"               type="bool"       value="$(arg pub_video)" />
+        <param name="video_location"      type="string"     value="$(arg video_location)" />
+
+        <param name="fps"                 type="int"        value="$(arg fps)" />
+        <param name="imageWidth"          type="int"        value="$(arg image_width)" />
+        <param name="imageHeight"         type="int"        value="$(arg image_height)" />
+        <param name="showImage"           type="bool"       value="$(arg show_image)" />
+    </node>
+
+</launch>

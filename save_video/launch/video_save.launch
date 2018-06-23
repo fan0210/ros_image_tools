@@ -1,0 +1,51 @@
+<launch>
+
+<!-- instructions -->
+  <!-- start this launch file to save images or videos -->
+  
+  <!-- open a new Termainal and tab "rosservice call /stop_cmd" to end saving rather than "ctrl-C"! -->
+<!-- instructions -->
+
+
+
+  <!-- save image or video -->
+    <arg name = "saveImg"           default="true"/>
+    <arg name = "saveVideo"         default="false"/>
+
+  <!-- save fps -->
+    <arg name = "fps"           default="5"/>
+
+  <!-- image location -->
+    <arg name = "rgb_location"           default="/home/nvidia/catkin_ws/src/save_video/image/rgb"/>
+    <arg name = "depth_location"         default="/home/nvidia/catkin_ws/src/save_video/image/depth"/>
+
+  <!-- video location -->
+    <arg name = "video_location"           default="/home/nvidia/catkin_ws/src/save_video/video"/>
+
+  <!-- choose to show image or not -->
+    <arg name = "showImage"           default="true"/>
+
+  <!-- topics and services -->
+    <arg name = "rgb_topic"                   default="/camera/color/image_raw"/>
+    <arg name = "depth_topic"                 default="/camera/depth/image_rect_raw"/>
+    <arg name = "stop_node_service"           default="/stop_cmd"/>
+
+  <!-- Node -->
+  <node name="video_save_node" pkg="save_video" type="video_save_node" output="screen" ns="save_video">
+    <param name="saveImg"            type="bool"      value="$(arg saveImg)"/>
+    <param name="saveVideo"          type="bool"      value="$(arg saveVideo)"/>
+    <param name="fps"                type="double"    value="$(arg fps)"/>
+    <param name="rgb_location"       type="string"    value="$(arg rgb_location)"/>
+    <param name="depth_location"     type="string"    value="$(arg depth_location)"/>
+    <param name="video_location"     type="string"    value="$(arg video_location)"/>
+    <param name="showImage"          type="bool"      value="$(arg showImage)"/>
+ 
+    <remap from="rgb_image_raw"       to="$(arg rgb_topic)"/>
+    <remap from="depth_image_raw"     to="$(arg depth_topic)"/>
+    <remap from="stop_cmd"            to="$(arg stop_node_service)"/>
+  </node>
+
+</launch>
+  
+
+  
